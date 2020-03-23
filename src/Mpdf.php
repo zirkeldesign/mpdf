@@ -14719,7 +14719,7 @@ class Mpdf implements \Psr\Log\LoggerAwareInterface
 	/* -- HTML-CSS -- */
 	/* -- CSS-PAGE -- */
 
-	function SetPagedMediaCSS($name, $first, $oddEven)
+	function SetPagedMediaCSS($name, $first, $oddEven, $page = null)
 	{
 		if ($oddEven == 'E') {
 			if ($this->directionality == 'rtl') {
@@ -14735,6 +14735,9 @@ class Mpdf implements \Psr\Log\LoggerAwareInterface
 			}
 		}
 		$name = strtoupper($name);
+		if (is_null($page)) {
+			$page = $this->page;
+		}
 		$p = [];
 		$p['SIZE'] = 'AUTO';
 
@@ -15078,6 +15081,7 @@ class Mpdf implements \Psr\Log\LoggerAwareInterface
 		}
 		$this->page_box['outer_width_LR'] = $outer_width_LR; // Used in MARKS:crop etc.
 		$this->page_box['outer_width_TB'] = $outer_width_TB;
+		$this->logger->debug($page);
 
 		return [$orientation, $mgl, $mgr, $mgt, $mgb, $mgh, $mgf, $header, $footer, $bg, $resetpagenum, $pagenumstyle, $suppress, $marks, $newformat];
 	}
